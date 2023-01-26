@@ -28,6 +28,12 @@ public class Ticket {
     private AppUser user;
 
     @Column(nullable = false)
+    private String airline;
+
+    @Column(nullable = false)
+    private Integer count;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime usedAt;

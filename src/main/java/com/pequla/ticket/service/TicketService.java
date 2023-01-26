@@ -66,6 +66,8 @@ public class TicketService {
         return TicketModel.builder()
                 .id(ticket.getId())
                 .flight(webService.getFlightById(ticket.getFlightId()))
+                .airline(ticket.getAirline())
+                .count(ticket.getCount())
                 .createdAt(ticket.getCreatedAt())
                 .usedAt(ticket.getUsedAt())
                 .build();

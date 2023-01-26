@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 public class TicketModel {
     private Integer id;
     private FlightModel flight;
+    private String airline;
+    private Integer count;
     private LocalDateTime createdAt;
     private LocalDateTime usedAt;
 }
