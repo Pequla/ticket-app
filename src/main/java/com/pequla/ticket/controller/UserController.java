@@ -23,16 +23,6 @@ public class UserController {
 
     private final UserService service;
 
-    @GetMapping
-    public Page<AppUser> getUsersPaged(@RequestParam String token, Pageable pageable) throws IOException {
-        return service.getAllUsers(token, pageable);
-    }
-
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<AppUser> getUsersPaged(@RequestParam String token, @PathVariable Integer id) throws IOException {
-        return ResponseEntity.of(service.getUserById(token, id));
-    }
-
     @PostMapping(path = "/login")
     public HashMap<String, String> login(@RequestBody LoginModel model) throws JsonProcessingException {
         return service.login(model);

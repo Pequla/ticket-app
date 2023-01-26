@@ -15,15 +15,17 @@ public class MailService {
     private String username;
     private final JavaMailSender sender;
 
-    public void sendSimpleEmail(String to, String body, String subject) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(username);
-        message.setTo(to);
-        message.setText(body);
-        message.setSubject(subject);
+    public void send(String to, String body, String subject) {
+        new Thread(() -> {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(username);
+            message.setTo(to);
+            message.setText(body);
+            message.setSubject(subject);
 
-        sender.send(message);
-        log.info("Mail \"" + subject + "\" sent to " + to);
-        log.info("Body: " + body);
+            sender.send(message);
+            log.info("Mail \"" + subject + "\" sent to " + to);
+            log.info("Body: " + body);
+        }, "MailSender-" + to).start();
     }
 }

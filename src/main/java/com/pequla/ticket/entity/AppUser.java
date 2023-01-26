@@ -1,5 +1,6 @@
 package com.pequla.ticket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +22,12 @@ public class AppUser {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
     private String name;
-
-    @Column(name = "is_admin", nullable = false)
-    private Boolean admin;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
