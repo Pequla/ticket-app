@@ -46,6 +46,5 @@ public class AppUser {
 
     private LocalDateTime updatedAt;
     private LocalDateTime lastLoginAt;
-    private String passwordToken;
     private String verifyToken;
 }

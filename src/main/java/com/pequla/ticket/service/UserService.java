@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pequla.ticket.entity.AppUser;
 import com.pequla.ticket.error.UserRejectedException;
-import com.pequla.ticket.model.CreateModel;
-import com.pequla.ticket.model.LoginModel;
-import com.pequla.ticket.model.TokenModel;
-import com.pequla.ticket.model.UserModel;
+import com.pequla.ticket.model.*;
 import com.pequla.ticket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,6 +117,22 @@ public class UserService {
             throw new UserRejectedException(UserRejectedException.Type.TOKEN_EXPIRED);
         }
         return model;
+    }
+
+    public UserModel changePassword(PasswordModel model, String token) throws IOException {
+        AppUser user = getUserFromToken(token);
+
+        BCrypt.Result result = BCrypt.verifyer().verify(model.getOldPassword().toCharArray(), user.getPassword());
+        if (!result.verified) {
+            throw new UserRejectedException(UserRejectedException.Type.BAD_PASSWORD);
+        }
+
+        // Changing password
+        String hashed = BCrypt.withDefaults().hashToString(12, model.getNewPassword().toCharArray());
+        user.setUpdatedAt(LocalDateTime.now());
+        user.setPassword(hashed);
+        service.send(user.getEmail(), "You have successfully changed your password", "Password changed");
+        return makeModel(repository.save(user));
     }
 
     public AppUser getUserFromToken(String token) throws IOException {

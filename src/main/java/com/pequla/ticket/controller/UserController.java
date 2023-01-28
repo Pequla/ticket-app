@@ -1,15 +1,12 @@
 package com.pequla.ticket.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.pequla.ticket.entity.AppUser;
 import com.pequla.ticket.model.CreateModel;
 import com.pequla.ticket.model.LoginModel;
+import com.pequla.ticket.model.PasswordModel;
 import com.pequla.ticket.model.UserModel;
 import com.pequla.ticket.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -46,5 +43,10 @@ public class UserController {
     @PutMapping(path = "/verify/{token}")
     public UserModel verifyEmail(@PathVariable String token) {
         return service.verifyUser(token);
+    }
+
+    @PutMapping(path = "/password")
+    public UserModel changePassword(@RequestParam String token, @RequestBody PasswordModel model) throws IOException {
+        return service.changePassword(model, token);
     }
 }
