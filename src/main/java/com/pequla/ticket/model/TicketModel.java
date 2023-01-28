@@ -17,4 +17,5 @@ public class TicketModel {
     private Boolean oneWay;
     private LocalDateTime createdAt;
     private LocalDateTime usedAt;
+    private Double rating;
 }

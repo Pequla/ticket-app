@@ -82,6 +82,20 @@ public class TicketService {
                 "Ticket deleted");
     }
 
+    public TicketModel setRating(String token, Integer id, Double rating) throws IOException {
+        AppUser user = userService.getUserFromToken(token);
+        Optional<Ticket> optional = ticketRepo.findByIdAndUser(id, user);
+        if (optional.isEmpty()) throw new NotFoundException();
+        Ticket ticket = optional.get();
+
+        if (ticket.getUsedAt() != null) {
+            throw new RuntimeException("Ticket has not been used yet");
+        }
+
+        ticket.setRating(rating);
+        return makeModel(ticket);
+    }
+
     private TicketModel makeModel(Ticket ticket) {
         FlightModel flight = webService.getFlightById(ticket.getFlightId());
         return makeModel(ticket, flight);
@@ -96,6 +110,7 @@ public class TicketService {
                 .oneWay(ticket.getOneWay())
                 .createdAt(ticket.getCreatedAt())
                 .usedAt(ticket.getUsedAt())
+                .rating(ticket.getRating())
                 .build();
     }
 }

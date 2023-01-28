@@ -42,6 +42,11 @@ public class TicketController {
         return service.saveTicket(token, ticket);
     }
 
+    @PutMapping(path = "/{id}")
+    public TicketModel setRating(@PathVariable Integer id, @RequestParam String token, @RequestParam Double rating) throws IOException {
+        return service.setRating(token, id, rating);
+    }
+
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id, @RequestParam String token) throws IOException {

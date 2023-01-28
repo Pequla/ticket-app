@@ -40,4 +40,6 @@ public class Ticket {
     private LocalDateTime createdAt;
 
     private LocalDateTime usedAt;
+
+    private Double rating;
 }
