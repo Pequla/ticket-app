@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pequla</groupId>
     <artifactId>ticket-app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>ticket-app</name>
     <description>ticket-app</description>
     <properties>
