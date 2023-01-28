@@ -49,14 +49,16 @@ public class TicketService {
 
         TicketModel model = makeModel(ticketRepo.save(ticket));
         mailService.send(user.getEmail(),
-                "You have successfully booked a ticket" + model.getId() + " for flight " + model.getFlight().getFlightKey(),
+                "You have successfully booked a ticket " + model.getId() + " for flight " + model.getFlight().getFlightKey(),
                 "Ticket information");
         return model;
     }
 
     public void deleteTicket(String token, Integer id) throws IOException {
         AppUser user = userService.getUserFromToken(token);
-        ticketRepo.deleteByIdAndUser(id, user);
+        Optional<Ticket> optional = ticketRepo.findByIdAndUser(id, user);
+        if (optional.isEmpty()) throw new NotFoundException();
+        ticketRepo.delete(optional.get());
         mailService.send(user.getEmail(),
                 "You have successfully deleted your ticket " + id,
                 "Ticket deleted");
@@ -68,6 +70,7 @@ public class TicketService {
                 .flight(webService.getFlightById(ticket.getFlightId()))
                 .airline(ticket.getAirline())
                 .count(ticket.getCount())
+                .oneWay(ticket.getOneWay())
                 .createdAt(ticket.getCreatedAt())
                 .usedAt(ticket.getUsedAt())
                 .build();

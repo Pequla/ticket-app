@@ -33,6 +33,9 @@ public class Ticket {
     @Column(nullable = false)
     private Integer count;
 
+    @Column(name = "is_one_way", nullable = false)
+    private Boolean oneWay;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

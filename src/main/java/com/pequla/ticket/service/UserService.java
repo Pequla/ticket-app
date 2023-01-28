@@ -82,12 +82,16 @@ public class UserService {
         newUser.setEmail(model.getEmail());
         newUser.setPassword(hashed);
         newUser.setName(model.getName());
+        newUser.setCountry(model.getCountry());
+        newUser.setCity(model.getCity());
+        newUser.setAddress(model.getAddress());
+        newUser.setPhone(model.getPhone());
         newUser.setCreatedAt(LocalDateTime.now());
         newUser.setVerifyToken(UUID.randomUUID().toString());
 
         AppUser savedUser = repository.save(newUser);
         service.send(savedUser.getEmail(),
-                "Follow this link to verify email: https://ticketapp.pequla.com/action/verify?token=" + savedUser.getVerifyToken(),
+                "Follow this link to verify email: https://ticketapp.pequla.com/action/verify/" + savedUser.getVerifyToken(),
                 "Verify email");
         return makeModel(savedUser);
     }
@@ -126,6 +130,10 @@ public class UserService {
         return UserModel.builder()
                 .email(user.getEmail())
                 .name(user.getName())
+                .country(user.getCountry())
+                .city(user.getCity())
+                .address(user.getAddress())
+                .phone(user.getPhone())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .lastLoginAt(user.getLastLoginAt())
