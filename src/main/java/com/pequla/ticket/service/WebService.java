@@ -14,7 +14,7 @@ public class WebService {
     }
 
     public FlightModel getFlightById(Integer id) {
-        String url = "http://82.208.22.205:7000/api/flight/{id}";
+        String url = "https://flight.pequla.com/api/flight/{id}";
         return this.restTemplate.getForObject(url, FlightModel.class, id);
     }
 }

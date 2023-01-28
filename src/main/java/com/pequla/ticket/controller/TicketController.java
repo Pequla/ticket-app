@@ -18,6 +18,11 @@ public class TicketController {
     private final TicketService service;
 
     @GetMapping
+    public List<TicketModel> getAvailableTickets(@RequestParam String token) throws IOException {
+        return service.getAvailableTickets(token);
+    }
+
+    @GetMapping(path = "/unused")
     public List<TicketModel> getUnused(@RequestParam String token) throws IOException {
         return service.getUnusedTickets(token);
     }

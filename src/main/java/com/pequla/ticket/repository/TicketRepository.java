@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     Optional<Ticket> findByIdAndUser(Integer id, AppUser user);
+
     void deleteByIdAndUser(Integer id, AppUser user);
 
     List<Ticket> findAllByUserAndUsedAtIsNull(AppUser user);
