@@ -88,7 +88,7 @@ public class TicketService {
         if (optional.isEmpty()) throw new NotFoundException();
         Ticket ticket = optional.get();
 
-        if (ticket.getUsedAt() != null) {
+        if (ticket.getUsedAt() == null) {
             throw new RuntimeException("Ticket has not been used yet");
         }
 
