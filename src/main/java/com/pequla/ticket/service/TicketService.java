@@ -93,7 +93,7 @@ public class TicketService {
         }
 
         ticket.setRating(rating);
-        return makeModel(ticket);
+        return makeModel(ticketRepo.save(ticket));
     }
 
     private TicketModel makeModel(Ticket ticket) {
